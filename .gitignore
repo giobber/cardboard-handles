@@ -8,3 +8,6 @@
 **/*.stl
 **/*.gcode
 **/*.3mf
+
+config/*.toml
+!config/*.example.toml
