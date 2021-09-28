@@ -43,8 +43,7 @@ mask_depth = 2
 mask_width = inner_width + 2 * mask_border
 mask_height = inner_height + 2 * mask_border
 
-mask = button_hole(mask_width, mask_height)
-mask = solid.linear_extrude(mask_depth)(mask)
+mask = button_hole_3d(mask_width, mask_height, mask_depth)
 
 
 # External part main body
@@ -53,11 +52,8 @@ external_depth = 17
 external_width = inner_width + 2 * external_border
 external_height = inner_height + 2 * external_border
 
-external = button_hole(external_width, external_height)
-external = solid.linear_extrude(external_depth)(external)
-
-external_hole = button_hole(inner_width, inner_height)
-external_hole = solid.hole()(solid.linear_extrude(external_depth)(external_hole))
+external = button_hole_3d(external_width, external_height, external_depth)
+external_hole = button_hole_3d(inner_width, inner_height, external_depth)
 
 
 # Internal part main body
@@ -66,11 +62,8 @@ internal_depth = 10
 internal_width = external_width + 2 * internal_border
 internal_height = external_height + 2 * internal_border
 
-internal = button_hole(internal_width, internal_height)
-internal = solid.linear_extrude(internal_depth)(internal)
-
-internal_hole = button_hole(external_width, external_height)
-internal_hole = solid.hole()(solid.linear_extrude(internal_depth)(internal_hole))
+internal = button_hole_3d(internal_width, internal_height, internal_depth)
+internal_hole = button_hole_3d(external_width, external_height, internal_depth)
 
 
 external_part = mask + external - external_hole
