@@ -33,14 +33,16 @@ develop:
 	$(PIP) install -e .
 
 
-.PHONT: help
-help: 
-	$(VENV)/bin/python -m $(PACKAGE) --help
+
+.PHONY: handles
+handles:
+	$(VENV)/bin/python -m handles
 
 
-.PHONY: run
-run:
-	$(VENV)/bin/python -m $(PACKAGE) 
+.PHONY: ashtray
+ashtray:
+	$(VENV)/bin/python -m ashtray
+
 
 	
 .PHONY: test
