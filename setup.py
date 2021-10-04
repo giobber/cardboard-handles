@@ -14,4 +14,4 @@ except pkg_resources.VersionConflict:
     sys.exit(1)
 
 if __name__ == "__main__":
-    setuptools.setup(packages=["handles"])
+    setuptools.setup(packages=["utils", "handles", "ashtray"])
