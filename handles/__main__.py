@@ -1,15 +1,10 @@
-import dataclasses
 import pathlib
 
 import solid
 import solid.utils
+from loguru import logger
 
-from .config import load_toml
-
-
-@dataclasses.dataclass
-class Config:
-    pass
+from utils.config import load_toml
 
 
 # TODO: move to module
@@ -45,6 +40,7 @@ config = load_toml(CONFIG_PATH / "handles.toml", Config)
 
 
 # inner Hole
+# TODO: calculate external depth based on cardboard depth
 inner_width = 100
 inner_height = 35
 cardboard_depth = 6
@@ -58,6 +54,7 @@ mask_height = inner_height + 2 * mask_border
 
 
 # External part main body
+# TODO: missing border clip to handle internal part
 external_border = 3.5
 external_depth = 17
 external_width = inner_width + 2 * external_border
@@ -72,6 +69,7 @@ external_part = solid.color("ForestGreen")(external_part)
 
 
 # Internal part main body
+# TODO: missing tolerance to let parts slice together
 internal_border = 1.5
 internal_depth = 10
 internal_width = external_width + 2 * internal_border
@@ -99,6 +97,7 @@ full.add(solid.utils.up(mask_depth + cardboard_depth)(internal_part))
 
 
 # Render
+logger.info("Rendering...")
 solid.scad_render_to_file(external_part, OUTPUT_PATH / "external.scad")
 solid.scad_render_to_file(internal_part, OUTPUT_PATH / "internal.scad")
 solid.scad_render_to_file(full, OUTPUT_PATH / "full.scad")
