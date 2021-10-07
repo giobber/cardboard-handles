@@ -1,7 +1,7 @@
 import solid.utils
 from loguru import logger
 
-from models.system.config import load_toml
+from models.system.config import load_toml, show_config
 from models.system.constants import CONFIG_PATH, OUTPUT_PATH
 from models.system.models import button_hole, teeth
 from models.system.utils import render, set_color
@@ -9,6 +9,10 @@ from models.system.utils import render, set_color
 from .config import Config
 
 c = load_toml(CONFIG_PATH / "handles.toml", Config)
+kwargs = dict(segments=c.segments)
+
+show_config(c, ("tolerance", "lock_depth", "body_height", "hang_length"))
+
 
 # External part
 mask = button_hole(c.hole_width, c.hole_height, c.mask_border, c.mask_depth)
