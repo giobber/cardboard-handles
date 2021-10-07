@@ -53,6 +53,6 @@ else:
 
 
 # Rendering
-render(external, OUTPUT_PATH / "external.scad")
-render(internal, OUTPUT_PATH / "internal.scad")
-render(full, OUTPUT_PATH / "full.scad")
+render(external, OUTPUT_PATH / "handles_external.scad")
+render(internal, OUTPUT_PATH / "handles_internal.scad")
+render(full, OUTPUT_PATH / "handles_full.scad")
