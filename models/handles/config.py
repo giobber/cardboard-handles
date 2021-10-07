@@ -4,7 +4,7 @@ import math
 from models.system.utils import degree_to_radians
 
 @dataclasses.dataclass
-class Config:
+class HandlesConfig:
     hole_width: float = 90
     hole_height: float = 30
     hole_depth: float = 18
