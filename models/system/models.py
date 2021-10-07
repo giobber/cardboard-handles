@@ -4,7 +4,7 @@ import solid
 import solid.utils
 from solid import OpenSCADObject
 
-from .utils import extrude
+from .utils import extrude, degree_to_radians
 
 
 def pill(width: float, height: float, **kwargs) -> OpenSCADObject:
@@ -61,7 +61,7 @@ def button_hole(
 
 
 def teeth(base: float, angle: float, length: float):
-    angle_r = angle * math.tau / 360
+    angle_r = degree_to_radians(angle)
     x = base * math.cos(angle_r) ** 2
     y = base * math.sin(angle_r) * math.cos(angle_r)
 

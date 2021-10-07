@@ -1,5 +1,11 @@
+import math
+
 import solid
 from loguru import logger
+
+
+def degree_to_radians(angle_d: float):
+    return angle_d * math.tau / 360
 
 
 def set_color(obj: solid.OpenSCADObject, color: str):

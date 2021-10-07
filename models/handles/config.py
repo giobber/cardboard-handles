@@ -1,6 +1,7 @@
 import dataclasses
 import math
 
+from models.system.utils import degree_to_radians
 
 @dataclasses.dataclass
 class Config:
@@ -23,7 +24,7 @@ class Config:
 
     @property
     def tolerance(self) -> float:
-        angle_r = self.hang_angle * math.tau / 360
+        angle_r = degree_to_radians(self.hang_angle)
         return self.hang_depth * math.sin(angle_r) * math.cos(angle_r)
 
     @property
