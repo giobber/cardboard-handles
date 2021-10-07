@@ -1,9 +1,9 @@
 import itertools
+from typing import Iterable
 
 import dacite
 import toml
 from loguru import logger
-from typing import Iterable
 
 
 def load_toml(path, model):
@@ -19,8 +19,11 @@ def load_toml(path, model):
         exit()
 
 
-def show_config(config, fields: Iterable[str]):
+def show_config(config, fields: Iterable[str] = None):
     logger.info("[Configuration]")
+    if fields is None:
+        fields = []
+
     for field in itertools.chain(config.__dataclass_fields__.keys(), fields):
         value = getattr(config, field)
         if isinstance(value, bool):
