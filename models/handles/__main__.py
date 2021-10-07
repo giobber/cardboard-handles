@@ -28,7 +28,7 @@ external = set_color(external, "ForestGreen")
 
 
 # Internal part
-offset = c.body_border + c.tolerance
+offset = c.body_border + c.tolerance - 0.2
 
 width = c.hole_width + 2 * offset
 height = c.hole_height + 2 * offset

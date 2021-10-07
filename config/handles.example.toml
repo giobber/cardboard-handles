@@ -1,0 +1,16 @@
+#hole_width = 90
+#hole_height = 30
+#hole_depth = 18
+
+#mask_border = 10
+#body_border = 3
+#lock_border = 2
+
+#mask_depth = 2
+#hang_depth = 2
+#cardboard_depth = 2
+
+#hang_angle = 40
+
+#segments = 64
+#compose_full = true

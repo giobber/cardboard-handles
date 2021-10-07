@@ -13,10 +13,7 @@ class Config:
     lock_border: float = 2
 
     mask_depth: float = 2
-    lock_depth: float = 8
     hang_depth: float = 2
-
-    tolerance: float = 1
     cardboard_depth: float = 2
 
     hang_angle: float = 40
@@ -45,4 +42,4 @@ class Config:
 
     @property
     def hang_length(self):
-        return (self.hole_width - self.hole_height) * 0.9
+        return (self.hole_width - self.hole_height) * 0.8
