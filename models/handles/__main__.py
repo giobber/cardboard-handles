@@ -44,12 +44,12 @@ internal = set_color(internal, "Lime")
 # Complete design
 full = solid.union()
 if c.compose_full:
+    full.add(external)
+    full.add(solid.utils.up(c.mask_depth + c.cardboard_depth)(internal))
+else:
     offset = c.hole_height / 2 + c.mask_border + 5
     full.add(solid.utils.forward(offset)(external))
     full.add(solid.utils.back(offset)(internal))
-else:
-    full.add(external)
-    full.add(solid.utils.up(c.mask_depth + c.cardboard_depth)(internal))
 
 
 # Rendering
