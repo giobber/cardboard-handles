@@ -1,13 +1,14 @@
 import math
-import pathlib
 
 import solid
 import solid.utils
 from loguru import logger
 
-# TODO: move to a constants module
-CONFIG_PATH = pathlib.Path("./config")
-OUTPUT_PATH = pathlib.Path("./output")
+from models.system.config import load_toml, show_config
+from models.system.constants import CONFIG_PATH, OUTPUT_PATH
+from models.system.utils import render, set_color
+
+from .config import AshtrayConfig
 
 
 def parallelogram(width, height, angle):
@@ -19,50 +20,39 @@ def parallelogram(width, height, angle):
     return solid.polygon(points=points)
 
 
-diameter = 110  # External diameter (12 cm - .5 cm)
-height = 30  # wall height (without floor and overhang)
-border = 3  # Wall and floor border thickness
-
-hang_angle = 40  # overhang angle
-hang_offset = 10  # overhang offset
-
-hole_diameter = 8  # cigarette hole
-
-segments = 64
-
-external_radius = diameter / 2
-internal_radius = external_radius - border
+c: AshtrayConfig = load_toml(CONFIG_PATH / "ashtray.toml", AshtrayConfig)
+show_config(c)
 
 
-floor = solid.square((internal_radius, border))
+floor = solid.square((c.floor_radius, c.floor_thick))
 
 
-angle = solid.utils.arc(rad=border, start_degrees=-90, end_degrees=0)
-angle = solid.translate((internal_radius, border, 0))(angle)
+angle = solid.utils.arc(rad=1, start_degrees=-90, end_degrees=0)
+angle = solid.scale((c.wall_thick, c.floor_thick, 1))(angle)
+angle = solid.translate((c.floor_radius, c.floor_thick, 0))(angle)
 
 
-wall = solid.square((border, height))
-wall = solid.translate((internal_radius, border, 0))(wall)
+wall = solid.square((c.wall_thick, c.height - c.floor_thick))
+wall = solid.translate((c.floor_radius, c.floor_thick, 0))(wall)
 
 
-hang_angle_r = hang_angle * math.tau / 360
-hang_height = hang_offset * math.tan(hang_angle_r)
-hang = parallelogram(border, hang_height, hang_angle)
-hang = solid.translate((internal_radius, height + border, 0))(hang)
+hang = solid.polygon(((0, 0), (c.hang_height, 0), (0, -c.hang_height)))
+hang = solid.translate((c.floor_radius + c.wall_thick, c.height, 0))(hang)
 
 
 draw = floor + angle + wall + hang
+result = solid.rotate_extrude(360, segments=c.segments)(draw)
+result = set_color(result, "Green")
 
-hole_length = diameter + 2 * hang_offset
-hole_height = border + height + hang_height
-hole = solid.cylinder(d=hole_diameter, h=hole_length, segments=segments)
-hole = solid.utils.down(hole_length / 2)(hole)
-hole_x = solid.utils.up(hole_height)(solid.rotate((90, 0, 0))(hole))
-hole_y = solid.utils.up(hole_height)(solid.rotate((90, 0, 90))(hole))
+hole = solid.cylinder(d=c.hole_diameter, h=c.hole_length, segments=c.segments)
+hole = solid.rotate((0, 90 - c.hole_angle, 0))(hole)
+hole = solid.translate((c.full_radius - c.hole_length, 0, c.height))(hole)
 
+hole = set_color(hole, "red")
 
-result = solid.rotate_extrude(360, segments=segments)(draw)
-result -= hole_x
-result -= hole_y
+result -= solid.rotate((0, 0, 0))(hole)
+result -= solid.rotate((0, 0, 90))(hole)
+result -= solid.rotate((0, 0, 180))(hole)
+result -= solid.rotate((0, 0, 270))(hole)
 
-solid.scad_render_to_file(result, OUTPUT_PATH / "ashtray.scad")
+render(result, OUTPUT_PATH / "ashtray.scad")
