@@ -4,7 +4,8 @@ import solid
 import solid.utils
 from loguru import logger
 
-from utils.config import load_toml
+from .config import Config
+from models.system.config import load_toml
 
 
 # TODO: move to module
@@ -90,8 +91,8 @@ internal_part = solid.color("Lime")(internal_part)
 
 # Generate a composed solid
 full = solid.union()
-# full.add(solid.utils.forward(mask_height / 2 + 5)(external_part))
-# full.add(solid.utils.back(mask_height / 2 + 5)(internal_part))
+# full.add(solid.system.forward(mask_height / 2 + 5)(external_part))
+# full.add(solid.system.back(mask_height / 2 + 5)(internal_part))
 full.add(external_part)
 full.add(solid.utils.up(mask_depth + cardboard_depth)(internal_part))
 

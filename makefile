@@ -1,5 +1,5 @@
 PYTHON_VERSION=3
-PACKAGE=handles
+PACKAGE=models
 
 VENV=.venv
 SHELL=/bin/bash
@@ -36,12 +36,12 @@ develop:
 
 .PHONY: handles
 handles:
-	$(VENV)/bin/python -m handles
+	$(VENV)/bin/python -m models.handles
 
 
 .PHONY: ashtray
 ashtray:
-	$(VENV)/bin/python -m ashtray
+	$(VENV)/bin/python -m models.ashtray
 
 
 	
