@@ -20,7 +20,7 @@ body = button_hole(c.hole_width, c.hole_height, c.body_border, c.hole_depth, **k
 
 hang = teeth(c.hang_depth, 40, length=c.hang_length)
 hang = solid.rotate((0, 90, 0))(hang)
-hang_t = solid.translate((-c.hang_length / 2, c.body_height / 2, c.body_depth))(hang)
+hang_t = solid.translate((-c.hang_length / 2, c.body_height / 2, c.hole_depth))(hang)
 hang_b = solid.mirror((0, 1, 0))(hang_t)
 
 external = mask + body + hang_b + hang_t

@@ -1,10 +1,12 @@
 import dataclasses
+import math
 
 
 @dataclasses.dataclass
 class Config:
     hole_width: float = 90
     hole_height: float = 30
+    hole_depth: float = 18
 
     mask_border: float = 10
     body_border: float = 3
@@ -17,16 +19,24 @@ class Config:
     tolerance: float = 1
     cardboard_depth: float = 2
 
-    compose_full: bool = False
+    hang_angle: float = 40
+
+    segments: float = 64
+    compose_full: bool = True
 
     @property
-    def body_depth(self):
+    def tolerance(self) -> float:
+        angle_r = self.hang_angle * math.tau / 360
+        return self.hang_depth * math.sin(angle_r) * math.cos(angle_r)
+
+    @property
+    def lock_depth(self) -> float:
         return (
-            self.mask_depth
-            + self.cardboard_depth
-            + self.mask_depth
-            + self.lock_depth
-            + self.hang_depth
+            self.hole_depth
+            - self.hang_depth
+            - self.mask_depth
+            - self.cardboard_depth
+            - self.mask_depth
         )
 
     @property
