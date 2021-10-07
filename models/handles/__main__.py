@@ -4,38 +4,11 @@ import solid
 import solid.utils
 from loguru import logger
 
-from .config import Config
 from models.system.config import load_toml
+from models.system.constants import CONFIG_PATH, OUTPUT_PATH
+from models.system.models import button_hole, button_hole_3d, pill
 
-
-# TODO: move to module
-def pill(width: float, diameter: float, **kwargs) -> solid.OpenSCADObject:
-    center_distance = (width - diameter) / 2
-    return solid.hull()(
-        solid.utils.left(center_distance)(solid.circle(d=diameter, **kwargs)),
-        solid.utils.right(center_distance)(solid.circle(d=diameter, **kwargs)),
-    )
-
-
-# TODO: move to module
-def button_hole(
-    width: float, diameter: float, border: float, **kwargs
-) -> solid.OpenSCADObject:
-    assert border > 0
-    _full = pill(width + 2 * border, diameter + 2 * border, **kwargs)
-    _hole = pill(width, diameter, **kwargs)
-    return _full - _hole
-
-
-def button_hole_3d(
-    width: float, diameter: float, border: float, depth: float, **kwargs
-) -> solid.OpenSCADObject:
-    draw = button_hole(width, diameter, border, **kwargs)
-    return solid.linear_extrude(depth)(draw)
-
-
-CONFIG_PATH = pathlib.Path("./config")
-OUTPUT_PATH = pathlib.Path("./output")
+from .config import Config
 
 config = load_toml(CONFIG_PATH / "handles.toml", Config)
 
