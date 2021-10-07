@@ -19,6 +19,7 @@ def pill(width: float, height: float, **kwargs) -> OpenSCADObject:
     center_offset = width / 2 - radius
     return solid.hull()(
         solid.utils.left(center_offset)(solid.circle(r=radius, **kwargs)),
+        solid.square((width - height, height), center=True),
         solid.utils.right(center_offset)(solid.circle(r=radius, **kwargs)),
     )
 
