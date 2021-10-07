@@ -1,3 +1,5 @@
+import math
+
 import solid
 import solid.utils
 from solid import OpenSCADObject
@@ -56,3 +58,13 @@ def button_hole(
         result = extrude(result, depth)
 
     return result
+
+
+def teeth(base: float, angle: float, length: float):
+    angle_r = angle * math.tau / 360
+    x = base * math.cos(angle_r) ** 2
+    y = base * math.sin(angle_r) * math.cos(angle_r)
+
+    points = ((0, 0), (x, y), (base, 0))
+    triangle = solid.polygon(points)
+    return extrude(triangle, length)

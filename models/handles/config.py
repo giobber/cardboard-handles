@@ -28,3 +28,11 @@ class Config:
             + self.lock_depth
             + self.hang_depth
         )
+
+    @property
+    def body_height(self):
+        return self.hole_height + 2 * self.body_border
+
+    @property
+    def hang_length(self):
+        return (self.hole_width - self.hole_height) * 0.9
