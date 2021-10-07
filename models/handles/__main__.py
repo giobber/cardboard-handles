@@ -15,8 +15,8 @@ show_config(c, ("tolerance", "lock_depth", "body_height", "hang_length"))
 
 
 # External part
-mask = button_hole(c.hole_width, c.hole_height, c.mask_border, c.mask_depth)
-body = button_hole(c.hole_width, c.hole_height, c.body_border, c.body_depth)
+mask = button_hole(c.hole_width, c.hole_height, c.mask_border, c.mask_depth, **kwargs)
+body = button_hole(c.hole_width, c.hole_height, c.body_border, c.hole_depth, **kwargs)
 
 hang = teeth(c.hang_depth, 40, length=c.hang_length)
 hang = solid.rotate((0, 90, 0))(hang)
@@ -34,8 +34,8 @@ width = c.hole_width + 2 * offset
 height = c.hole_height + 2 * offset
 border = c.mask_border - offset
 
-mask = button_hole(width, height, border, c.mask_depth)
-lock = button_hole(width, height, c.lock_border, c.lock_depth + c.mask_depth)
+mask = button_hole(width, height, border, c.mask_depth, **kwargs)
+lock = button_hole(width, height, c.lock_border, c.lock_depth + c.mask_depth, **kwargs)
 
 internal = mask + lock
 internal = set_color(internal, "Lime")
