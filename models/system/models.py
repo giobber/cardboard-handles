@@ -2,6 +2,8 @@ import solid
 import solid.utils
 from solid import OpenSCADObject
 
+from .utils import extrude
+
 
 def pill(width: float, height: float, **kwargs) -> OpenSCADObject:
     """A pill-shaped object.
@@ -21,7 +23,9 @@ def pill(width: float, height: float, **kwargs) -> OpenSCADObject:
     )
 
 
-def button_hole(width: float, height: float, border: float, **kwargs) -> OpenSCADObject:
+def button_hole(
+    width: float, height: float, border: float, depth: float = None, **kwargs
+) -> OpenSCADObject:
     """A pill shaped object with a hole inside.
 
     Params:
@@ -29,6 +33,7 @@ def button_hole(width: float, height: float, border: float, **kwargs) -> OpenSCA
             height (float): height in mm (or diameter on circular parts)
             border (float): hole border in mm, if positive is added to a pill with
                             given dimension, otherwise is subtracted
+            depth (float, optional): if given extrude the model
     """
     if height > width:
         raise ValueError("width should be greater than height")
@@ -45,11 +50,8 @@ def button_hole(width: float, height: float, border: float, **kwargs) -> OpenSCA
     else:
         raise ValueError("Border should be a strictly positive or negative value")
 
-    return full - hole
+    result = full - hole
+    if depth is not None:
+        result = extrude(result, depth)
 
-
-def button_hole_3d(
-    width: float, diameter: float, border: float, depth: float, **kwargs
-) -> OpenSCADObject:
-    draw = button_hole(width, diameter, border, **kwargs)
-    return solid.linear_extrude(depth)(draw)
+    return result
