@@ -7,10 +7,10 @@ from models.system.utils import render, set_color
 
 from .config import HandlesConfig
 
-c = load_toml(CONFIG_PATH / "handles.toml", HandlesConfig)
+c: HandlesConfig = load_toml(CONFIG_PATH / "handles.toml", HandlesConfig)
 kwargs = dict(segments=c.segments)
 
-show_config(c, ("tolerance", "lock_depth", "body_height", "hang_length"))
+show_config(c, ("tolerance", "lock_depth", "body_height", "hang_length", "hang_offset"))
 
 
 # External part
