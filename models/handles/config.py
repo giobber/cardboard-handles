@@ -3,6 +3,7 @@ import math
 
 from models.system.utils import degree_to_radians
 
+
 @dataclasses.dataclass
 class HandlesConfig:
     hole_width: float = 90
@@ -23,9 +24,13 @@ class HandlesConfig:
     compose_full: bool = True
 
     @property
-    def tolerance(self) -> float:
+    def hang_offset(self) -> float:
         angle_r = degree_to_radians(self.hang_angle)
         return self.hang_depth * math.sin(angle_r) * math.cos(angle_r)
+
+    @property
+    def tolerance(self) -> float:
+        return max(0.2, self.hang_offset / 2)
 
     @property
     def lock_depth(self) -> float:
