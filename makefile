@@ -44,6 +44,11 @@ ashtray:
 	$(VENV)/bin/python -m models.ashtray
 
 
+.PHONY: basstrap
+basstrap:
+	$(VENV)/bin/python -m models.basstrap
+
+
 	
 .PHONY: test
 test:
