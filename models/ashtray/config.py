@@ -4,11 +4,11 @@ import math
 
 @dataclasses.dataclass
 class AshtrayConfig:
-    diameter: float = 110
+    diameter: float = 120
     height: float = 42  # 2 + 30 + 10
 
     wall_thick: float = 2.0  # 5 * 0.4
-    floor_thick: float = 1.4  # 5 * 0.28
+    floor_thick: float = 2.0  # 5 * 0.20
 
     hang_height: float = 10  # overhang offset
 
