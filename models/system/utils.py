@@ -19,3 +19,23 @@ def extrude(draw: solid.OpenSCADObject, depth: float) -> solid.OpenSCADObject:
 def render(obj: solid.OpenSCADObject, path):
     logger.info(f"Rendering {path}")
     solid.scad_render_to_file(obj, path)
+
+
+def rotate_xy(obj: solid.OpenSCADObject, angle: float) -> solid.OpenSCADObject:
+    return solid.rotate(angle)(obj)
+
+
+def rotate(
+    obj: solid.OpenSCADObject,
+    axis_x: float = 0.0,
+    axis_y: float = 0.0,
+    axis_z: float = 0.0,
+) -> solid.OpenSCADObject:
+    angles = (axis_x, axis_y, axis_z)
+    return solid.rotate(angles)(obj)
+
+
+def translate(
+    obj: solid.OpenSCADObject, x: float = 0.0, y: float = 0.0, z: float = 0.0
+) -> solid.OpenSCADObject:
+    return solid.translate((x, y, z))(obj)
